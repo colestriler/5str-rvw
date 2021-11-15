@@ -1,14 +1,20 @@
 
+MVP: https://gumroad-backend.herokuapp.com/
 
-## Database
-I designed a relational schema (Postgres) and created a one-to-many relationship between the Product and Review tables. One product can have many reviews.
+### How to navigate
 
-SQLAlchemy is used as the ORM.
+- `app.py` contains the MVP & V2 API and the database schema
+- `/templates/reviews.html` contains the html & jQuery for the MVP
+- `/static/style.css` contains some simple CSS for the MVP's html
 
-I used the same schema for both the MVP and V2.
 
-My initial idea was to create two separate Review tables (i.e.`ReviewMVP` and `ReviewV2`) so that the MVP reviews would be restricted to integers, and the V2 reviews would be floats.
+### Database
+I set up a Postgres database and created a one-to-many relationship between the Product and Review tables. One product can have many reviews.
 
-But to limit the overhead, I decided to handle this logic in the XXX route and use the same db for both the MVP and V2. 
+To interact with the database in Python, I use the SQLAlchemy ORM.
 
-I figured a float could be used to represent whole numbers, but an integer couldn't be used to represent decimals.
+Even though the MVP only supports whole integer reviews, I used the same schema for both the MVP and V2 and stored the reviews as floats.
+
+I figured a float could be used to represent both whole numbers and decimals. I also considered storing the reviews the same way Stripe stores dollar amounts where $5.00 is represented as the integer 500. But to avoid having to write extra logic to convert these integers to decimals later, I decided this was too much work for such a simple task.
+
+
