@@ -1,0 +1,48 @@
+
+.container {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviews {
+    display: flex;
+    vertical-align: middle;
+}
+
+.submit-reviews {
+    align-content: center;
+    align-items: center;
+}
+
+.checked {
+    color: orange;
+}
+
+div.stars {
+    width: 270px;
+    display: inline-block;
+}
+
+input.star { display: none; }
+
+label.star {
+    float: right;
+    padding: 10px;
+    font-size: 32px;
+    color: #444;
+    transition: all .2s;
+}
+
+input.star:checked ~ label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+}
+
+label.star:hover { transform: scale(1.1); }
+
+label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+}

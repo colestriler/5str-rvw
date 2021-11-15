@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Reviews</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <script>
+        $('input[type=submit]').submit(function() {
+            for (i = 0; i < document.getElementsByName('star').length; i++) {
+                if (document.getElementsByName('star')[i].checked === true) {
+                    var star = document.getElementsByName('star')[i].value;
+                    break;
+                }
+            }
+
+            var description= $("#description").val();
+
+            $.ajax({
+                type: "POST",
+                url: $(this).closest("form").attr("action"),
+                data: $.param({
+                    star: star,
+                    description: description,
+                }),
+                success: function(data) {
+                    alert('SUCCESS: ' + data);
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    document.getElementById('Node_Type').selectedIndex = 0;
+                    showMsg('ERROR: ' + errorThrown);
+                    return false;
+                }
+            });
+            return false;
+        });
+    </script>
+
+    <div class="container">
+        <h1 class="mt-5">{{ product.name}}</h1>
+        <div class="reviews">
+            <span class="fa fa-star {{ "checked" if average >=1 else "" }}"></span>
+            <span class="fa fa-star {{ "checked" if average >=2 else "" }}"></span>
+            <span class="fa fa-star {{ "checked" if average >=3 else "" }}"></span>
+            <span class="fa fa-star {{ "checked" if average >=4 else "" }}"></span>
+            <span class="fa fa-star {{ "checked" if average >=5 else "" }}"></span>
+            <h6 class="ml-2">({{ average }})</h6>
+        </div>
+        <hr/>
+
+        <h2> Submit a review:</h2>
+
+        <div class="stars">
+            <form class="rating" name="{{ product.id }}" action="{{url_for('create_review_mvp')}}" >
+                <input value="5" class="star star-5" id="star-5" type="radio" name="star" />
+                <label class="star star-5" for="star-5"></label>
+                <input value="4" class="star star-4" id="star-4" type="radio" name="star" />
+                <label class="star star-4" for="star-4"></label>
+                <input value="3" class="star star-3" id="star-3" type="radio" name="star" />
+                <label class="star star-3" for="star-3"></label>
+                <input value="2" class="star star-2" id="star-2" type="radio" name="star" />
+                <label class="star star-2" for="star-2"></label>
+                <input value="1" class="star star-1" id="star-1" type="radio" name="star" />
+                <label class="star star-1" for="star-1"></label>
+                <label for="exampleFormControlTextarea1">Optional text:</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+                <input class="mt-3" type='submit' value='Submit'>
+            </form>
+        </div>
+        <hr/>
+
+        <h2> Reviews:</h2>
+        {% for review in reviews %}
+            <div class="reviews">
+                <span class="fa fa-star {{ "checked" if review.rating >=1 else "" }}"></span>
+                <span class="fa fa-star {{ "checked" if review.rating >=2 else "" }}"></span>
+                <span class="fa fa-star {{ "checked" if review.rating >=3 else "" }}"></span>
+                <span class="fa fa-star {{ "checked" if review.rating >=4 else "" }}"></span>
+                <span class="fa fa-star {{ "checked" if review.rating >=5 else "" }}"></span>
+                <h6 class="ml-2">({{ review.rating }})</h6>
+            </div>
+            <p class="ml-3">{{ review.description }}</p>
+        {% endfor %}
+
+    </div> <!-- end container -->
+</body>
+</html>
