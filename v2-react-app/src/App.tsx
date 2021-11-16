@@ -13,6 +13,7 @@ import {
 import { makeStyles } from '@mui/styles';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import set = Reflect.set;
 
 const useStyles = makeStyles({
   root: {
@@ -67,6 +68,7 @@ function App() {
     if (response.data === null) {
     } else {
       setReviews(response.data)
+      setNewRating(0)
     }
   }, [axios]);
 
