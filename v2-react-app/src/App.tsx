@@ -13,7 +13,6 @@ import {
 import { makeStyles } from '@mui/styles';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import set = Reflect.set;
 
 const useStyles = makeStyles({
   root: {
